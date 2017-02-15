@@ -87,29 +87,7 @@ public class LinkedList<T> implements ADTLISTInterface<T> {
 	}
 
 	@Override
-	public boolean removeExist(int location) {
-
-		T result = null;
-		if ((location >= 1) && (location <= numberOfEntries)) {
-			assert !empty();
-			if (location == 1) {
-				result = firstNode.getData();
-				firstNode = firstNode.getNextNode();
-			} else {
-				Node nodeBefore = getNodeAt(location - 1);
-				Node nodeToRemove = nodeBefore.getNextNode();
-				Node nodeAfter = nodeToRemove.getNextNode();
-				nodeBefore.setNextNode(nodeAfter);
-
-				result = nodeToRemove.getData();
-			}
-			numberOfEntries--;
-		}
-		return true;
-	}
-
-	@Override
-	public boolean removeCrossOut(int location) {
+	public boolean removeItem(int location) {
 
 		T result = null;
 		if ((location >= 1) && (location <= numberOfEntries)) {
@@ -133,7 +111,7 @@ public class LinkedList<T> implements ADTLISTInterface<T> {
 	@Override
 	public boolean remove() {
 		for (int i = 0; i < numberOfEntries; i++) {
-			removeExist(i);
+			removeItem(i);
 		}
 		firstNode = null;
 		numberOfEntries = 0;
@@ -154,17 +132,11 @@ public class LinkedList<T> implements ADTLISTInterface<T> {
 	}
 
 	@Override
-	public T look(T item) {
-		boolean found = false;
-		T result=null;
-		Node currentNode = firstNode;
-		while (!found && (currentNode != null)) {
-			if (item.equals(currentNode.getData())){
-				found = true;
-				result=currentNode.getData();
-			}
-			else
-				currentNode = currentNode.getNextNode();
+	public T look(int item) {
+		T result = null;
+		if ((item >= 1) && (item <= numberOfEntries)) {
+			assert !empty();
+			result = getNodeAt(item).getData();
 		}
 		return result;
 	}
@@ -199,5 +171,19 @@ public class LinkedList<T> implements ADTLISTInterface<T> {
 			result = false;
 		}
 		return result;
+	}
+
+	public boolean checkforItem(T item) {
+		boolean found = false;
+		T result = null;
+		Node currentNode = firstNode;
+		while (!found && (currentNode != null)) {
+			if (item.equals(currentNode.getData())) {
+				found = true;
+				result = currentNode.getData();
+			} else
+				currentNode = currentNode.getNextNode();
+		}
+		return found;
 	}
 }

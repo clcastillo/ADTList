@@ -1,6 +1,5 @@
 import java.util.Vector;
 
-
 public class VectorList<T> implements ADTLISTInterface<T> {
 
 	private Vector<T> list;
@@ -33,19 +32,7 @@ public class VectorList<T> implements ADTLISTInterface<T> {
 	}
 
 	@Override
-	public boolean removeExist(int location) {
-		T result = null;
-		if ((location >= 1) && (location <= list.size())) {
-			assert !empty();
-			result = list.remove(location - 1);
-		}
-		count--;
-
-		return true;
-	}
-
-	@Override
-	public boolean removeCrossOut(int location) {
+	public boolean removeItem(int location) {
 		T result = null;
 		if ((location >= 1) && (location <= list.size())) {
 			assert !empty();
@@ -59,7 +46,7 @@ public class VectorList<T> implements ADTLISTInterface<T> {
 	@Override
 	public boolean remove() {
 		for (int i = 0; i < count; i++) {
-			removeExist(i);
+			removeItem(i);
 		}
 		count = 0;
 		return false;
@@ -99,16 +86,28 @@ public class VectorList<T> implements ADTLISTInterface<T> {
 	}
 
 	@Override
-	public T look(T item) {
+	public T look(int item) {
+		T result = null;
+		if ((item >= 1) && (item <= list.size())) {
+			assert !empty();
+			result = list.get(item - 1);
+		}
+		return result;
+	}
+
+	@Override
+	public boolean checkforItem(T item) {
+		boolean end = false;
 		T result = null;
 		for (int i = 0; i < count; i++) {
 			if (list.contains(item)) {
 				result = item;
 			}
 		}
+		if (result != null)
+			end = true;
 
-		return result;
-
+		return end;
 	}
 
 }
